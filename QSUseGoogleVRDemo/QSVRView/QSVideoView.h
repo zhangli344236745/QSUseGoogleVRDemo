@@ -6,8 +6,16 @@
 //  Copyright © 2017年 shaoqing. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "GVRVideoView.h"
 
+/**
+ 全景视频播放 + VR
+ */
 @interface QSVideoView : GVRVideoView
+
+/**
+ 加载视频的网络链接
+ */
+- (void)loadVideoUrlString:(NSString *)videoUrlString ofType:(GVRVideoType)videoType;
 
 @end

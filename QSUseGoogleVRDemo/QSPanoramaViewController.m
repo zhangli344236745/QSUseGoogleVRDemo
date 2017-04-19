@@ -7,11 +7,11 @@
 //
 
 #import "QSPanoramaViewController.h"
-#import "GVRPanoramaView.h"
+#import "QSPanoramaView.h"
 
 @interface QSPanoramaViewController ()<GVRWidgetViewDelegate>{
 
-    GVRPanoramaView *_panoView;
+    QSPanoramaView *_panoView;
 }
 
 @end
@@ -21,16 +21,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navigationItem.title = @"全景图片VR";
+    self.navigationItem.title = @"全景图片+VR";
     
-    _panoView = [[GVRPanoramaView alloc] init];
-    _panoView.delegate = self;
-    _panoView.enableFullscreenButton = YES;
-    _panoView.enableCardboardButton = YES;
-    _panoView.enableTouchTracking = YES;
-    [_panoView loadImage:[UIImage imageNamed:@"andes.jpg"]
-                  ofType:kGVRPanoramaImageTypeStereoOverUnder];
-    _panoView.frame = self.view.bounds;
+    _panoView = [[QSPanoramaView alloc] initWithFrame:self.view.bounds];
+    [_panoView loadImageUrlString:@"https://d3fvwbt1l4ic3o.cloudfront.net/image/median/bab7026b-e692-42b6-9ffe-581a8b8ef0b7.jpg"
+                           ofType:kGVRPanoramaImageTypeMono];
+
  
     [self.view addSubview:_panoView];
 }
@@ -42,11 +38,6 @@
 }
 
 
-#pragma mark - GVRWidgetViewDelegate
-
-- (void)widgetView:(GVRWidgetView *)widgetView didLoadContent:(id)content {
-    NSLog(@"Loaded panorama image");
-}
 
 
 @end

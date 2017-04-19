@@ -22,7 +22,7 @@
 
 + (BOOL)hideHUDInView:(UIView *)view{
     
-   return [MBProgressHUD hideHUDForView:view animated:YES];
+   return [MBProgressHUD hideHUDForView:view animated:NO];
 }
 
 

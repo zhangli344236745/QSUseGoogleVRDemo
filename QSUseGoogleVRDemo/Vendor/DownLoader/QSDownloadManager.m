@@ -1,28 +1,42 @@
 //
 //  QSDownloadManager.m
-//
-// Copyright (c) 2016年 任子丰 ( http://github.com/renzifeng )
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
+
 
 #import "QSDownloadManager.h"
 
+#pragma mark - QSSessionModel
+@implementation QSSessionModel
+
+- (NSString *)fileSizeInUnitString:(unsigned long long)contentLength{
+    
+    CGFloat fileSize = 0.0f;
+    NSString *unitStr = @"";
+    if(contentLength >= pow(1024, 3)) {
+        fileSize =  contentLength * 1.0 / pow(1024, 3);
+        unitStr = @"GB";
+    }
+    else if (contentLength >= pow(1024, 2)) {
+        
+        fileSize = contentLength * 1.0 / pow(1024, 2);
+        unitStr = @"MB";
+    }else if (contentLength >= 1024) {
+        
+        fileSize = contentLength * 1.0 / 1024;
+        unitStr = @"KB";
+    }else {
+        fileSize = contentLength * 1.0;
+        unitStr = @"B";
+    }
+    
+    NSString *fileSizeInUnitStr = [NSString stringWithFormat:@"%.2f %@",
+                                   fileSize,unitStr];
+    return fileSizeInUnitStr;
+}
+
+@end
+
+
+#pragma mark - QSDownloadManager
 @interface QSDownloadManager()<NSCopying, NSURLSessionDelegate>
 
 /** 保存所有任务*/
@@ -81,13 +95,29 @@ static QSDownloadManager *_downloadManager;
 
 
 /**
- *  开启任务下载资源
+ *  下载资源
  */
-- (void)download:(NSString *)url progress:(QSDownloadProgressBlock)progressBlock state:(QSDownloadStateBlock)stateBlock{
+- (void)download:(NSString *)url progress:(QSDownloadProgressBlock)progressBlock completedBlock:(QSDownloadCompletedBlock)completedBlock{
     
-    BOOL isValid = [self validDownloadUrlString:url stateBlock:stateBlock];
-    //凡是url为空，重复下载，已经下载过的，都不需要再下载
+    //初始化
+    QSSessionModel *sessionModel = [[QSSessionModel alloc] init];
+    sessionModel.url = url;
+    sessionModel.fileCachePath = QSFileFullpath(url);
+    sessionModel.progressBlock = progressBlock;
+    sessionModel.completedBlock = completedBlock;
+    
+    BOOL isValid = [self validDownload:url sessionModel:sessionModel];
+    //凡是url为空，重复下载,都不需要再下载
     if (!isValid) {
+        return;
+    }
+    
+    if ([self isFileExistsAt:url] && sessionModel) {
+        sessionModel.state = QSDownloadStateCompleted;
+        if (completedBlock && sessionModel.fileCachePath) {
+            completedBlock(sessionModel.fileCachePath);
+        }
+        NSLog(@"%@ 已下载完成",url);
         return;
     }
     
@@ -95,7 +125,7 @@ static QSDownloadManager *_downloadManager;
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:[[NSOperationQueue alloc] init]];
     
     // 创建流
-    NSOutputStream *stream = [NSOutputStream outputStreamToFileAtPath:QSFileFullpath(url) append:YES];
+    NSOutputStream *stream = [NSOutputStream outputStreamToFileAtPath:sessionModel.fileCachePath append:YES];
     // 创建请求
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     // 设置请求头
@@ -106,37 +136,32 @@ static QSDownloadManager *_downloadManager;
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request];
     NSUInteger taskIdentifier = arc4random() % ((arc4random() % 10000 + arc4random() % 10000));
     [dataTask setValue:@(taskIdentifier) forKeyPath:@"taskIdentifier"];
-    // 保存任务
-    [self.tasks setValue:dataTask forKey:QSFileName(url)];
-    
-    QSSessionModel *sessionModel = [[QSSessionModel alloc] init];
-    sessionModel.url = url;
-    sessionModel.progressBlock = progressBlock;
-    sessionModel.stateBlock = stateBlock;
+   
+    sessionModel.state = QSDownloadStateStart;
     sessionModel.stream = stream;
     sessionModel.startTime = [NSDate date];
-    sessionModel.fileName = QSFileName(url);
+    
+    //fileName(key) --> task
+    //taskIdentifier(key) --> seesionModel
+    
+    // 缓存任务
+    [self.tasks setValue:dataTask forKey:QSFileName(url)];
+    //缓存model到内存
     [self.sessionModels setValue:sessionModel forKey:@(dataTask.taskIdentifier).stringValue];
-
+    //开始下载
     [self start:url];
 }
 
-
-- (BOOL)validDownloadUrlString:(NSString *)urlString stateBlock:(QSDownloadStateBlock)stateBlock{
-
-    NSLog(@"urlString不可以为空");
-    if (!urlString || urlString.length == 0)
-        return NO;
+- (BOOL)validDownload:(NSString *)url sessionModel:(QSSessionModel *)sessionModel{
     
-    if ([self isFileExistsAt:urlString] && stateBlock) {
-        stateBlock(DownloadStateCompleted);
-        NSLog(@"%@ 已下载完成",urlString);
+    if (!url || url.length == 0){
+        NSLog(@"urlString不可以为空");
         return NO;
     }
     
-    NSURLSessionDataTask *task = [self getTask:urlString];
+    NSURLSessionDataTask *task = [self getTask:url];
     if (task && task.state == NSURLSessionTaskStateRunning) {
-        NSLog(@"%@ 正在下载中，请勿重复下载",urlString);
+        NSLog(@"%@ 正在下载中，请勿重复下载",url);
         return NO;
     }
     
@@ -155,8 +180,6 @@ static QSDownloadManager *_downloadManager;
     
     NSURLSessionDataTask *task = [self getTask:url];
     [task resume];
-    
-    [self getSessionModel:task.taskIdentifier].stateBlock(DownloadStateStart);
 }
 
 
@@ -165,7 +188,11 @@ static QSDownloadManager *_downloadManager;
  */
 - (NSURLSessionDataTask *)getTask:(NSString *)url{
     
-    return (NSURLSessionDataTask *)[self.tasks valueForKey:QSFileName(url)];
+    NSURLSessionDataTask *task  = (NSURLSessionDataTask *)[self.tasks valueForKey:QSFileName(url)];
+    if (!task) {
+        NSLog(@"没有获得指定task");
+    }
+    return task;
 }
 
 /**
@@ -186,8 +213,6 @@ static QSDownloadManager *_downloadManager;
     }
     return NO;
 }
-
-
 
 #pragma mark NSURLSessionDataDelegate
 /**
@@ -245,9 +270,9 @@ static QSDownloadManager *_downloadManager;
     if(minutes>0) {[remainingTimeStr appendFormat:@"%d 分 ",minutes];}
     if(seconds>0) {[remainingTimeStr appendFormat:@"%d 秒",seconds];}
     
-    if (sessionModel.stateBlock) {
-        sessionModel.stateBlock(DownloadStateDownloading);
-    }
+    sessionModel.state = QSDownloadStateDownloading;
+    
+    //下载进度
     if (sessionModel.progressBlock) {
         sessionModel.progressBlock(progress, speedStr, remainingTimeStr);
     }
@@ -265,26 +290,33 @@ static QSDownloadManager *_downloadManager;
     [sessionModel.stream close];
     sessionModel.stream = nil;
     
+    NSString *costTimeStr = [NSString stringWithFormat:@"%.3lf",[[NSDate date] timeIntervalSinceDate:sessionModel.startTime]];
     if ([self isFileExistsAt:sessionModel.url]) {
         // 下载完成
-        sessionModel.stateBlock(DownloadStateCompleted);
+        sessionModel.state = QSDownloadStateCompleted;
+        if (sessionModel.completedBlock && sessionModel.fileCachePath) {
+            NSLog(@"%@下载成功",sessionModel.url);
+            sessionModel.completedBlock(sessionModel.fileCachePath);
+        }
         
     } else if (error){
         // 下载失败
-        sessionModel.stateBlock(DownloadStateFailed);
+        sessionModel.state = QSDownloadStateFailed;
+        [self deleteFileCacheAt:sessionModel.url];
+        NSLog(@"%@下载失败了",sessionModel.url);
     }
-    sessionModel.endTime = [NSDate date];
-    // 清除任务
-    [self.tasks removeObjectForKey:QSFileName(sessionModel.url)];
-    [self.sessionModels removeObjectForKey:@(task.taskIdentifier).stringValue];
+    
+    NSLog(@"%@下载花费时间: %@",sessionModel.url,costTimeStr);
 
-    
     // 清除任务
     [self.tasks removeObjectForKey:QSFileName(sessionModel.url)];
     [self.sessionModels removeObjectForKey:@(task.taskIdentifier).stringValue];
     
-    if (error.code == -999)
-        return;   // cancel
+    //取消请求
+    if (error.code == -999){
+        [self deleteFileCacheAt:sessionModel.url];
+        return;
+    }
 }
 
 #pragma mark - public methods

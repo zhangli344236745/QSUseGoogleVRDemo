@@ -2,24 +2,31 @@
 //  QSDownloadManager.h
 
 #import <UIKit/UIKit.h>
-#import "QSSessionModel.h"
+#import "QSDownLoadDefine.h"
 
-// 缓存主目录
-#define QSCachesDirectory [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject]stringByAppendingPathComponent:@"QSUseGoogleVRDemo"]
+#pragma mark - QSSessionModel
+@interface QSSessionModel : NSObject
 
-// 保存文件名
-#define QSFileName(url)  [[url componentsSeparatedByString:@"/"] lastObject]
+@property (nonatomic, strong) NSOutputStream *stream;  //输出流
+@property (nonatomic, copy) NSString *url;  //下载url地址
+@property (nonatomic, copy) NSString *fileCachePath;  //文件缓存路径
+@property (nonatomic, copy) NSString *totalSize;  //文件大小描述 如1MB，200KB
+@property (nonatomic, assign) NSInteger totalLength; //数据的总长度（字节数）
+@property (nonatomic, strong) NSDate *startTime;  //开始时间
+@property (nonatomic, assign)QSDownloadState state;  //下载的状态
 
-// 文件的存放路径（caches）
-#define QSFileFullpath(url) [QSCachesDirectory stringByAppendingPathComponent:QSFileName(url)]
+@property (nonatomic, copy) QSDownloadProgressBlock progressBlock; //下载进度
+@property (nonatomic, copy) QSDownloadCompletedBlock completedBlock; //下载完成处理
 
-// 文件的已下载长度
-#define QSDownloadLength(url) [[[NSFileManager defaultManager] attributesOfItemAtPath:QSFileFullpath(url) error:nil][NSFileSize] integerValue]
+/**
+ 返回文件的大小描述,如1MB，200KB
+ */
+- (NSString *)fileSizeInUnitString:(unsigned long long)contentLength;
 
-// 存储文件信息的路径（caches）
-#define QSDownloadDetailPath [QSCachesDirectory stringByAppendingPathComponent:@"downloadDetail.data"]
+@end
 
 
+#pragma mark - QSDownloadManager
 @interface QSDownloadManager : NSObject
 
 /**
@@ -27,15 +34,10 @@
  */
 + (instancetype)sharedInstance;
 
-
 /**
- *  开启任务下载资源
- *
- *  @param url           下载地址
- *  @param progressBlock 回调下载进度
- *  @param stateBlock    下载状态
+ *  下载资源
  */
-- (void)download:(NSString *)url progress:(QSDownloadProgressBlock)progressBlock state:(QSDownloadStateBlock)stateBlock;
+- (void)download:(NSString *)url progress:(QSDownloadProgressBlock)progressBlock completedBlock:(QSDownloadCompletedBlock)completedBlock;
 
 
 #pragma mark - public methods
