@@ -20,6 +20,10 @@
                     ofType:(GVRPanoramaImageType)imageType;
 
 
+/**
+ 取消当前的下载
+ */
+- (void)cancelCurrentDownLoad;
 
 
 @end

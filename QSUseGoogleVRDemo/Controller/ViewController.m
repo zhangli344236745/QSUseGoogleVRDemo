@@ -10,11 +10,15 @@
 #import "QSPanoramaViewController.h"
 #import "QSVideoViewController.h"
 
+#import "QSDownloadManager.h"
+#import "MBProgressHUD+Load.h"
+
 @interface ViewController ()
 
 @property (nonatomic,strong)UIButton *imageBtn;
 @property (nonatomic,strong)UIButton *videoBtn;
-
+@property (nonatomic,strong)UIButton *clearBtn;
+@property (nonatomic,strong)UILabel *fileSizeLabel;
 @end
 
 @implementation ViewController
@@ -36,6 +40,25 @@
         _videoBtn;
     })];
     
+    [self.view addSubview:({
+        _clearBtn = [self p_btnWithTitle:@"清除所有缓存"];
+        _clearBtn.frame = CGRectMake(15, 300, 100, 60);
+        _clearBtn;
+    })];
+    
+    [self.view addSubview:({
+        _fileSizeLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 400, 100, 60)];
+        _fileSizeLabel.textColor = [UIColor blueColor];
+        _fileSizeLabel.font = [UIFont systemFontOfSize:16];
+        _fileSizeLabel;
+    })];
+}
+
+
+- (void)viewDidAppear:(BOOL)animated{
+
+    [super viewDidAppear:animated];
+    self.fileSizeLabel.text = [[QSDownloadManager sharedInstance]getAllCacheFileSizeString];
 }
 
 - (UIButton *)p_btnWithTitle:(NSString *)title{
@@ -60,6 +83,13 @@
         
         QSVideoViewController *vc = [[QSVideoViewController alloc]init];
         [self.navigationController pushViewController:vc animated:YES];
+        
+    }else if(btn == self.clearBtn){
+    
+        [MBProgressHUD showHUDWithContent:@"清理缓存中..." toView:self.view];
+        [[QSDownloadManager sharedInstance] deleteAllFileCache];
+        self.fileSizeLabel.text = [[QSDownloadManager sharedInstance]getAllCacheFileSizeString];
+        [MBProgressHUD hideHUDInView:self.view];
     }
 }
 

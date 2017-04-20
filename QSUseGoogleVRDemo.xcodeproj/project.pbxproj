@@ -10,14 +10,16 @@
 		0DB7B4ED505FD865A77E2D94 /* libPods-QSUseGoogleVRDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88FAEAA91A058F84D6377E42 /* libPods-QSUseGoogleVRDemo.a */; };
 		88257D3E1EA703E5005CC843 /* QSPanoramaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88257D3D1EA703E5005CC843 /* QSPanoramaView.m */; };
 		88257D411EA70408005CC843 /* QSVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88257D401EA70408005CC843 /* QSVideoView.m */; };
-		88257D461EA70601005CC843 /* QSPanoramaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88257D431EA70601005CC843 /* QSPanoramaViewController.m */; };
-		88257D471EA70601005CC843 /* QSVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88257D451EA70601005CC843 /* QSVideoViewController.m */; };
-		88257D5F1EA74D1A005CC843 /* QSDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88257D561EA74D1A005CC843 /* QSDownloadManager.m */; };
-		88257D611EA74D1A005CC843 /* MBProgressHUD+Load.m in Sources */ = {isa = PBXBuildFile; fileRef = 88257D5B1EA74D1A005CC843 /* MBProgressHUD+Load.m */; };
-		88257D621EA74D1A005CC843 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 88257D5D1EA74D1A005CC843 /* MBProgressHUD.m */; };
+		88257D6A1EA8BF7B005CC843 /* QSVRView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 88257D691EA8BF7B005CC843 /* QSVRView.bundle */; };
+		88257D7F1EA8C025005CC843 /* QSPanoramaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88257D7A1EA8C025005CC843 /* QSPanoramaViewController.m */; };
+		88257D801EA8C025005CC843 /* QSVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88257D7C1EA8C025005CC843 /* QSVideoViewController.m */; };
+		88257D811EA8C025005CC843 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88257D7E1EA8C025005CC843 /* ViewController.m */; };
+		88257D8B1EA8C053005CC843 /* QSDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88257D851EA8C053005CC843 /* QSDownloadManager.m */; };
+		88257D8C1EA8C053005CC843 /* MBProgressHUD+Load.m in Sources */ = {isa = PBXBuildFile; fileRef = 88257D881EA8C053005CC843 /* MBProgressHUD+Load.m */; };
+		88257D8D1EA8C053005CC843 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 88257D8A1EA8C053005CC843 /* MBProgressHUD.m */; };
+		88257D901EA8C0A5005CC843 /* UIImage+QSView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88257D8F1EA8C0A5005CC843 /* UIImage+QSView.m */; };
 		883971401EA7026E00908C7F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8839713F1EA7026E00908C7F /* main.m */; };
 		883971431EA7026E00908C7F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 883971421EA7026E00908C7F /* AppDelegate.m */; };
-		883971461EA7026E00908C7F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 883971451EA7026E00908C7F /* ViewController.m */; };
 		883971491EA7026E00908C7F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 883971471EA7026E00908C7F /* Main.storyboard */; };
 		8839714B1EA7026E00908C7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8839714A1EA7026E00908C7F /* Assets.xcassets */; };
 		8839714E1EA7026E00908C7F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8839714C1EA7026E00908C7F /* LaunchScreen.storyboard */; };
@@ -48,23 +50,26 @@
 		88257D3D1EA703E5005CC843 /* QSPanoramaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSPanoramaView.m; sourceTree = "<group>"; };
 		88257D3F1EA70408005CC843 /* QSVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSVideoView.h; sourceTree = "<group>"; };
 		88257D401EA70408005CC843 /* QSVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSVideoView.m; sourceTree = "<group>"; };
-		88257D421EA70601005CC843 /* QSPanoramaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSPanoramaViewController.h; sourceTree = "<group>"; };
-		88257D431EA70601005CC843 /* QSPanoramaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSPanoramaViewController.m; sourceTree = "<group>"; };
-		88257D441EA70601005CC843 /* QSVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSVideoViewController.h; sourceTree = "<group>"; };
-		88257D451EA70601005CC843 /* QSVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSVideoViewController.m; sourceTree = "<group>"; };
-		88257D551EA74D1A005CC843 /* QSDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSDownloadManager.h; sourceTree = "<group>"; };
-		88257D561EA74D1A005CC843 /* QSDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSDownloadManager.m; sourceTree = "<group>"; };
-		88257D5A1EA74D1A005CC843 /* MBProgressHUD+Load.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Load.h"; sourceTree = "<group>"; };
-		88257D5B1EA74D1A005CC843 /* MBProgressHUD+Load.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+Load.m"; sourceTree = "<group>"; };
-		88257D5C1EA74D1A005CC843 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
-		88257D5D1EA74D1A005CC843 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		88257D631EA75F35005CC843 /* QSDownLoadDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QSDownLoadDefine.h; sourceTree = "<group>"; };
+		88257D691EA8BF7B005CC843 /* QSVRView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = QSVRView.bundle; sourceTree = "<group>"; };
+		88257D791EA8C025005CC843 /* QSPanoramaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSPanoramaViewController.h; sourceTree = "<group>"; };
+		88257D7A1EA8C025005CC843 /* QSPanoramaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSPanoramaViewController.m; sourceTree = "<group>"; };
+		88257D7B1EA8C025005CC843 /* QSVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSVideoViewController.h; sourceTree = "<group>"; };
+		88257D7C1EA8C025005CC843 /* QSVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSVideoViewController.m; sourceTree = "<group>"; };
+		88257D7D1EA8C025005CC843 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		88257D7E1EA8C025005CC843 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		88257D831EA8C053005CC843 /* QSDownLoadDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSDownLoadDefine.h; sourceTree = "<group>"; };
+		88257D841EA8C053005CC843 /* QSDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSDownloadManager.h; sourceTree = "<group>"; };
+		88257D851EA8C053005CC843 /* QSDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QSDownloadManager.m; sourceTree = "<group>"; };
+		88257D871EA8C053005CC843 /* MBProgressHUD+Load.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Load.h"; sourceTree = "<group>"; };
+		88257D881EA8C053005CC843 /* MBProgressHUD+Load.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+Load.m"; sourceTree = "<group>"; };
+		88257D891EA8C053005CC843 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		88257D8A1EA8C053005CC843 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		88257D8E1EA8C0A5005CC843 /* UIImage+QSView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+QSView.h"; sourceTree = "<group>"; };
+		88257D8F1EA8C0A5005CC843 /* UIImage+QSView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+QSView.m"; sourceTree = "<group>"; };
 		8839713B1EA7026E00908C7F /* QSUseGoogleVRDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QSUseGoogleVRDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8839713F1EA7026E00908C7F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		883971411EA7026E00908C7F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		883971421EA7026E00908C7F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		883971441EA7026E00908C7F /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		883971451EA7026E00908C7F /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		883971481EA7026E00908C7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8839714A1EA7026E00908C7F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8839714D1EA7026E00908C7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -116,40 +121,49 @@
 		88257D3B1EA703B6005CC843 /* QSVRView */ = {
 			isa = PBXGroup;
 			children = (
+				88257D821EA8C053005CC843 /* DownLoader */,
+				88257D861EA8C053005CC843 /* MBProgressHUD */,
 				88257D3C1EA703E5005CC843 /* QSPanoramaView.h */,
 				88257D3D1EA703E5005CC843 /* QSPanoramaView.m */,
 				88257D3F1EA70408005CC843 /* QSVideoView.h */,
 				88257D401EA70408005CC843 /* QSVideoView.m */,
+				88257D691EA8BF7B005CC843 /* QSVRView.bundle */,
+				88257D8E1EA8C0A5005CC843 /* UIImage+QSView.h */,
+				88257D8F1EA8C0A5005CC843 /* UIImage+QSView.m */,
 			);
 			path = QSVRView;
 			sourceTree = "<group>";
 		};
-		88257D511EA74D1A005CC843 /* Vendor */ = {
+		88257D781EA8C025005CC843 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				88257D521EA74D1A005CC843 /* DownLoader */,
-				88257D591EA74D1A005CC843 /* MBProgressHUD */,
+				88257D791EA8C025005CC843 /* QSPanoramaViewController.h */,
+				88257D7A1EA8C025005CC843 /* QSPanoramaViewController.m */,
+				88257D7B1EA8C025005CC843 /* QSVideoViewController.h */,
+				88257D7C1EA8C025005CC843 /* QSVideoViewController.m */,
+				88257D7D1EA8C025005CC843 /* ViewController.h */,
+				88257D7E1EA8C025005CC843 /* ViewController.m */,
 			);
-			path = Vendor;
+			path = Controller;
 			sourceTree = "<group>";
 		};
-		88257D521EA74D1A005CC843 /* DownLoader */ = {
+		88257D821EA8C053005CC843 /* DownLoader */ = {
 			isa = PBXGroup;
 			children = (
-				88257D551EA74D1A005CC843 /* QSDownloadManager.h */,
-				88257D561EA74D1A005CC843 /* QSDownloadManager.m */,
-				88257D631EA75F35005CC843 /* QSDownLoadDefine.h */,
+				88257D831EA8C053005CC843 /* QSDownLoadDefine.h */,
+				88257D841EA8C053005CC843 /* QSDownloadManager.h */,
+				88257D851EA8C053005CC843 /* QSDownloadManager.m */,
 			);
 			path = DownLoader;
 			sourceTree = "<group>";
 		};
-		88257D591EA74D1A005CC843 /* MBProgressHUD */ = {
+		88257D861EA8C053005CC843 /* MBProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
-				88257D5A1EA74D1A005CC843 /* MBProgressHUD+Load.h */,
-				88257D5B1EA74D1A005CC843 /* MBProgressHUD+Load.m */,
-				88257D5C1EA74D1A005CC843 /* MBProgressHUD.h */,
-				88257D5D1EA74D1A005CC843 /* MBProgressHUD.m */,
+				88257D871EA8C053005CC843 /* MBProgressHUD+Load.h */,
+				88257D881EA8C053005CC843 /* MBProgressHUD+Load.m */,
+				88257D891EA8C053005CC843 /* MBProgressHUD.h */,
+				88257D8A1EA8C053005CC843 /* MBProgressHUD.m */,
 			);
 			path = MBProgressHUD;
 			sourceTree = "<group>";
@@ -179,16 +193,10 @@
 		8839713D1EA7026E00908C7F /* QSUseGoogleVRDemo */ = {
 			isa = PBXGroup;
 			children = (
-				88257D511EA74D1A005CC843 /* Vendor */,
-				88257D421EA70601005CC843 /* QSPanoramaViewController.h */,
-				88257D431EA70601005CC843 /* QSPanoramaViewController.m */,
-				88257D441EA70601005CC843 /* QSVideoViewController.h */,
-				88257D451EA70601005CC843 /* QSVideoViewController.m */,
+				88257D781EA8C025005CC843 /* Controller */,
 				88257D3B1EA703B6005CC843 /* QSVRView */,
 				883971411EA7026E00908C7F /* AppDelegate.h */,
 				883971421EA7026E00908C7F /* AppDelegate.m */,
-				883971441EA7026E00908C7F /* ViewController.h */,
-				883971451EA7026E00908C7F /* ViewController.m */,
 				883971471EA7026E00908C7F /* Main.storyboard */,
 				8839714A1EA7026E00908C7F /* Assets.xcassets */,
 				8839714C1EA7026E00908C7F /* LaunchScreen.storyboard */,
@@ -343,6 +351,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88257D6A1EA8BF7B005CC843 /* QSVRView.bundle in Resources */,
 				8839714E1EA7026E00908C7F /* LaunchScreen.storyboard in Resources */,
 				8839714B1EA7026E00908C7F /* Assets.xcassets in Resources */,
 				883971491EA7026E00908C7F /* Main.storyboard in Resources */,
@@ -418,16 +427,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				883971461EA7026E00908C7F /* ViewController.m in Sources */,
-				88257D5F1EA74D1A005CC843 /* QSDownloadManager.m in Sources */,
-				88257D461EA70601005CC843 /* QSPanoramaViewController.m in Sources */,
 				88257D3E1EA703E5005CC843 /* QSPanoramaView.m in Sources */,
 				883971431EA7026E00908C7F /* AppDelegate.m in Sources */,
-				88257D621EA74D1A005CC843 /* MBProgressHUD.m in Sources */,
-				88257D611EA74D1A005CC843 /* MBProgressHUD+Load.m in Sources */,
 				883971401EA7026E00908C7F /* main.m in Sources */,
+				88257D811EA8C025005CC843 /* ViewController.m in Sources */,
+				88257D801EA8C025005CC843 /* QSVideoViewController.m in Sources */,
+				88257D901EA8C0A5005CC843 /* UIImage+QSView.m in Sources */,
+				88257D8B1EA8C053005CC843 /* QSDownloadManager.m in Sources */,
 				88257D411EA70408005CC843 /* QSVideoView.m in Sources */,
-				88257D471EA70601005CC843 /* QSVideoViewController.m in Sources */,
+				88257D8D1EA8C053005CC843 /* MBProgressHUD.m in Sources */,
+				88257D8C1EA8C053005CC843 /* MBProgressHUD+Load.m in Sources */,
+				88257D7F1EA8C025005CC843 /* QSPanoramaViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

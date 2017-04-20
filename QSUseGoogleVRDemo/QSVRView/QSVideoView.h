@@ -18,4 +18,10 @@
  */
 - (void)loadVideoUrlString:(NSString *)videoUrlString ofType:(GVRVideoType)videoType;
 
+
+/**
+ 取消当前的下载
+ */
+- (void)cancelCurrentDownLoad;
+
 @end
