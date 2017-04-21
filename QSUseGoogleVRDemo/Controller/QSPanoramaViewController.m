@@ -12,6 +12,7 @@
 @interface QSPanoramaViewController ()<GVRWidgetViewDelegate>{
 
     QSPanoramaView *_panoView;
+
 }
 
 @end
@@ -24,11 +25,10 @@
     self.navigationItem.title = @"全景图片+VR";
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
     
+    NSString *urlString = @"https://d3fvwbt1l4ic3o.cloudfront.net/image/median/bab7026b-e692-42b6-9ffe-581a8b8ef0b7.jpg";
+    
     _panoView = [[QSPanoramaView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - 64)];
-    [_panoView loadImageUrlString:@"https://d3fvwbt1l4ic3o.cloudfront.net/image/median/bab7026b-e692-42b6-9ffe-581a8b8ef0b7.jpg"
-                           ofType:kGVRPanoramaImageTypeMono];
-
- 
+    [_panoView loadImageUrl:[NSURL URLWithString:urlString]];
     [self.view addSubview:_panoView];
 }
 
@@ -42,8 +42,6 @@
 - (void)viewDidDisappear:(BOOL)animated{
 
     [super viewDidDisappear:animated];
-    [_panoView cancelCurrentDownLoad];
-
 }
 
 - (void)dealloc{

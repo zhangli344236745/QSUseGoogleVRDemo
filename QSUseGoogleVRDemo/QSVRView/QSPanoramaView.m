@@ -12,7 +12,7 @@
 
 @interface QSPanoramaView()<GVRWidgetViewDelegate>
 
-@property (nonatomic,copy)NSString *imageUrlString;
+@property (nonatomic,strong)NSURL *imageUrl;
 @property (nonatomic,strong)UIImageView *placeholderView;
 
 @end
@@ -24,25 +24,17 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setupConfig];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(badNetWorkNotification:)   name:
-         QSNetworkBadNotification object:nil];
     }
     return self;
 }
 
 - (void)setupConfig{
 
-    //隐藏消息按钮
     self.enableInfoButton = NO;
-    //
     self.enableFullscreenButton = NO;
-    //
     self.enableCardboardButton = YES;
-    //隐藏
     self.hidesTransitionView = YES;
-    //允许手势控制
     self.enableTouchTracking = YES;
-    
     self.delegate = self;
 }
 
@@ -56,22 +48,23 @@
     return _placeholderView;
 }
 
-- (void)loadImageUrlString:(NSString *)imageUrlString ofType:(GVRPanoramaImageType)imageType{
+- (void)loadImageUrl:(NSURL *)imageUrl{
+
+    [self loadImageUrl:imageUrl ofType:kGVRPanoramaImageTypeMono];
+}
+
+- (void)loadImageUrl:(NSURL *)imageUrl ofType:(GVRPanoramaImageType)imageType{
     
-    //新的链接或是原来没有下载链接
-    if ((!self.imageUrlString || self.imageUrlString.length == 0) || ![self.imageUrlString isEqualToString:imageUrlString]) {
-        
-        [self cancelCurrentDownLoad];
-        //更新urlStirng
-        self.imageUrlString = imageUrlString;
-    }else{
+    if ([self.imageUrl isEqual:imageUrl]) {
         return;
     }
-
+    
+    [self cancelCurrentDownLoad];
+    self.imageUrl = imageUrl;
     self.placeholderView.alpha = 1.0f; //遮盖
     [MBProgressHUD showHUDWithContent:@"图片加载中..." toView:self];
     
-    [[QSDownloadManager sharedInstance]download:imageUrlString
+    [[QSDownloadManager sharedInstance]download:[imageUrl absoluteString]
                                        progress:^(CGFloat progress, NSString *speed, NSString *remainingTime) {
 
                                            NSLog(@"当前下载进度:%.2lf%%,当前的下载速度是：%@，还需要时间:%@,",progress * 100,speed,remainingTime);
@@ -86,7 +79,7 @@
 
 - (void)cancelCurrentDownLoad{
     
-    [[QSDownloadManager sharedInstance] cancelDownLoad:self.imageUrlString];
+    [[QSDownloadManager sharedInstance] cancelDownLoad:[self.imageUrl absoluteString]];
     
 }
 
@@ -105,16 +98,5 @@
         [MBProgressHUD hideHUDInView:self];
     }];
 }
-
-- (void)badNetWorkNotification:(NSNotification*)notification{
-    
-    [MBProgressHUD hideHUDInView:self];
-    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"⚠️"  message:@"网络太差，请稍后再试..." delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-    [alertView show];
-}
-
-
-
-
 
 @end

@@ -14,12 +14,12 @@
 
 @interface QSVideoView()<GVRWidgetViewDelegate>
 
-@property (nonatomic,copy)NSString *videoUrlString;
+@property (nonatomic,strong)NSURL *videoUrl;
 
 @property (nonatomic,strong)UIImageView *placeholderView;
-
 @property (nonatomic,strong)UIButton *playBtn;
 @property (nonatomic,strong)UIProgressView *playProgressView;
+
 @property (nonatomic,assign)BOOL isPlaying;    //是否正在播放
 
 @end
@@ -37,8 +37,6 @@
         //监听耳机事件
         [[AVAudioSession sharedInstance] setActive:YES error:nil];//创建单例对象并且使其设置为活跃状态.
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioRouteChangeListenerCallback:)   name:AVAudioSessionRouteChangeNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(badNetWorkNotification:)   name:
-         QSNetworkBadNotification object:nil];
     }
     return self;
 }
@@ -73,7 +71,7 @@
 
     if (!_playBtn) {
         _playBtn = [[UIButton alloc]initWithFrame:self.bounds];
-        [_playBtn setImage:[UIImage vrBundleImageNamed:@"icon_play.png"] forState:UIControlStateNormal];
+        [_playBtn setImage:[UIImage vrBundleImageNamed:@"Images/icon_play.png"] forState:UIControlStateNormal];
         _playBtn.backgroundColor = [UIColor lightTextColor];
         [_playBtn addTarget:self action:@selector(onTapPlayAction:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -94,48 +92,32 @@
 }
 
 /**
- 加载视频的网络链接
+ 加载线上的视频
  */
-- (void)loadVideoUrlString:(NSString *)videoUrlString ofType:(GVRVideoType)videoType{
+
+- (void)loadFromOnlineUrl:(NSURL*)videoUrl{
+
+    [self loadFromOnlineUrl:videoUrl ofType:kGVRVideoTypeMono];
+}
+
+- (void)loadFromOnlineUrl:(NSURL *)videoUrl ofType:(GVRVideoType)videoType{
     
-    //新的链接或是原来没有下载链接
-    if ((!self.videoUrlString || self.videoUrlString.length == 0) || ![self.videoUrlString isEqualToString:videoUrlString]) {
-        //更新urlStirng
-        [self cancelCurrentDownLoad];
-        self.videoUrlString = videoUrlString;
-    }else{
+    if ([self.videoUrl isEqual:videoUrl]) {
         return;
     }
     
-    self.placeholderView.alpha = 1.0f;  //遮盖
+    self.videoUrl = videoUrl;
+    
     [MBProgressHUD showHUDWithContent:@"视频加载中..." toView:self];
-    [[QSDownloadManager sharedInstance]download:self.videoUrlString  progress:^(CGFloat progress, NSString *speed, NSString *remainingTime) {
-        
-        NSLog(@"当前下载进度:%.2lf%%,当前的下载速度是：%@，还需要时间:%@,",progress * 100,speed,remainingTime);
-    
-    } completedBlock:^(NSString *fileCacheFile) {
-    
-        NSURL *fileUrl = [NSURL fileURLWithPath:fileCacheFile];
-        [self loadFromUrl:fileUrl ofType:videoType];
-    }];
+    self.placeholderView.alpha = 1.0f;  //遮盖
+    [self loadFromUrl:videoUrl ofType:videoType];
 }
 
-- (void)cancelCurrentDownLoad{
-
-    [[QSDownloadManager sharedInstance] cancelDownLoad:self.videoUrlString];
-    
-}
 
 #pragma mark - GVRVideoViewDelegate
-- (void)widgetViewDidTap:(GVRWidgetView *)widgetView {
-
-//    NSLog(@"tap View");
-}
-
 - (void)widgetView:(GVRWidgetView *)widgetView didLoadContent:(id)content {
 
     NSLog(@"视频加载结束...");
-
     [UIView animateWithDuration:1.0 delay:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         
         self.placeholderView.alpha = 0;
@@ -249,13 +231,5 @@
         }];
     }
 }
-
-- (void)badNetWorkNotification:(NSNotification*)notification{
-    
-    [MBProgressHUD hideHUDInView:self];
-    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"⚠️"  message:@"网络太差，请稍后再试..." delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-    [alertView show];
-}
-
 
 @end

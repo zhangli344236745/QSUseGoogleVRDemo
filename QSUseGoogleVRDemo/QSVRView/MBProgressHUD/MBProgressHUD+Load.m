@@ -16,7 +16,7 @@
     hud.removeFromSuperViewOnHide = YES;
     hud.label.text = content;
     [view addSubview:hud];
-    [hud showAnimated:YES];
+    [hud showAnimated:NO];
     return hud;
 }
 

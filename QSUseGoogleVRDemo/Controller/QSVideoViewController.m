@@ -23,9 +23,10 @@
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"全景视频+VR";
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
+    NSString *urlString = @"https://d3fvwbt1l4ic3o.cloudfront.net/video/small/da8e5704-91b2-441c-ae0a-a9fdfadf6923.mp4";
+    
     _videoView = [[QSVideoView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - 64)];
-    [_videoView loadVideoUrlString:@"https://d3fvwbt1l4ic3o.cloudfront.net/video/small/da8e5704-91b2-441c-ae0a-a9fdfadf6923.mp4"
-                            ofType:kGVRVideoTypeMono];
+    [_videoView loadFromOnlineUrl:[NSURL URLWithString:urlString]];
     [self.view addSubview:_videoView];
 }
 
@@ -36,9 +37,7 @@
 
 - (void)viewDidDisappear:(BOOL)animated{
     
-    [super viewDidDisappear:animated];
-    [_videoView cancelCurrentDownLoad];
-    
+    [super viewDidDisappear:animated];    
 }
 
 - (void)dealloc{

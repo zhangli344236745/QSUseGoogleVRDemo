@@ -14,14 +14,10 @@
 @interface QSVideoView : GVRVideoView
 
 /**
- 加载视频的网络链接
+ 加载线上视频
  */
-- (void)loadVideoUrlString:(NSString *)videoUrlString ofType:(GVRVideoType)videoType;
+- (void)loadFromOnlineUrl:(NSURL*)videoUrl;
 
-
-/**
- 取消当前的下载
- */
-- (void)cancelCurrentDownLoad;
+- (void)loadFromOnlineUrl:(NSURL *)videoUrl ofType:(GVRVideoType)videoType;
 
 @end

@@ -14,16 +14,11 @@
 @interface QSPanoramaView : GVRPanoramaView
 
 /**
- 加载图片的网络链接
+    加载线上图片
  */
-- (void)loadImageUrlString:(NSString *)imageUrl
-                    ofType:(GVRPanoramaImageType)imageType;
+- (void)loadImageUrl:(NSURL *)imageUrl;
 
 
-/**
- 取消当前的下载
- */
-- (void)cancelCurrentDownLoad;
-
+- (void)loadImageUrl:(NSURL *)imageUrl ofType:(GVRPanoramaImageType)imageType;
 
 @end
